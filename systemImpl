@@ -1,0 +1,14 @@
+下列為該表單系統大致實作的方式
+●
+因為這個專案是填單系統,所以會有非常多的欄位(html input)需要對應,且因為一些欄位改變後會影響到其他欄位（像是Disabled,或change、blur後要觸發的event）,所以需要頻繁地觸發event,
+這部分主要是透過設定定義檔後AutoGen出需要的前後端對應的field name,
+在標籤（html）上使用onchange或onblur再透過Ajax跑到後端,然後使用AutoGen對應好的pojo欄位field name來達到後端控制前端的操作功能。
+ 
+●
+這份專案在欄位控制上頻繁所以盡量避免在前端使用JQuery,不然網頁上的維護性會變得很差,需要使用上述的固定套版來保持程式碼的可複用性、維護性。
+上述這些是這次專案主要使用比較特別的技術,來專門解決欄位需要頻繁觸發event的需求。
+ 
+●
+主要開發過程是依照Spec,Spec中會有欄位的中文名稱,資料庫中的欄位名稱,資  料庫table name
+先使用Mybatis逆向工程來產生mapper後,在Controller層用Spring標籤管理使用
+,SpringMVC來控制網頁的導向,會使用到ModelAndView類或是用@ResponseBody回傳Json格式到前端頁面,如果有對DB操控新刪修時會在Service層使用到SpringTransaction。
